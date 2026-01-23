@@ -1,3 +1,4 @@
+import "./about.css";
 export default function About(){
-    return <h1 className="text-4xl">About Page</h1>
+    return <h1>About Page</h1>
 }
