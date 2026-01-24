@@ -1,0 +1,13 @@
+.active{
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+    margin-right: 18px;
+    font-size: 19px;
+}
+.link{
+    color: blue;
+    text-decoration: none;
+    margin-right: 18px;
+    font-size: 19px;
+}
