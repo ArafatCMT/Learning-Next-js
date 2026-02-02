@@ -1,11 +1,14 @@
 "use client"
+import { useEffect } from "react"
 
-export default function ErrorBoundary({error}:{error:Error}){
+export default function ErrorBoundary({ error }: { error: Error }) {
+    useEffect(() => {
+        console.log(`${error}`)
+    }, [error])
     return (
         <>
-            <div>
-                <h1>Oops! Something went wrong.</h1>
-                <p>{error.message}</p>
+            <div className="flex items-center justify-center h-screen">
+                <div className="text-2xl text-red-500">Error fetching users data</div>
             </div>
         </>
     )
