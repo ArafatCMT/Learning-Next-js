@@ -13,7 +13,7 @@ export default async function PostsSequential() {
     const respone = await fetch("https://jsonplaceholder.typicode.com/posts");
     const posts: Post[] = await respone.json()
 
-    const filteredPost = posts.filter((post) => post.id % 10 === 1);
+    // const filteredPost = posts.filter((post) => post.id % 10 === 1);
 
     return (
         <>
@@ -31,7 +31,7 @@ export default async function PostsSequential() {
                     justifyContent: "center",
                 }}
             >
-                {filteredPost.map((post) => (
+                {posts.map((post) => (
                     <div
                         key={post.id}
                         style={{
