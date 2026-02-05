@@ -92,6 +92,7 @@ export async function RemoveProduct(id:number) {
     })
 
     if(response.ok){
+        console.log(response.ok)
         revalidatePath("/products-server")
         // revalidatePath() দিলে ওই path-এর data আবার নতুন করে fetch হবে।
     }

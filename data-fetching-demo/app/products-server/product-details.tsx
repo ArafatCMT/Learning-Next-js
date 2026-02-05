@@ -10,20 +10,32 @@ export type Product = {
     description: string
 }
 
-export async function ProductDetails({products}:{products: Product[]}) {
+export async function ProductDetails({ products }: { products: Product[] }) {
 
-    // step 1 e useOptimistic setup hoi e optimisticProducts === products set hoi ca [jeta hocce server action theke asa real data]
+    // Step 1️⃣: useOptimistic setup
+    // - Component render হওয়ার সময় `useOptimistic` একবার initialize হয়
+    // - `products` = server থেকে আসা আসল data
+    // - `optimisticProducts` = UI state mne products সেট হয়, ekhen e original (optimisticProducts === products)
+    //   মানে UI তে server এর আসল data দেখা যাবে, কোনো change হয়নি
 
     const [optimisticProducts, setOptimisticProduct] = useOptimistic(
         products,
         (currentProducts, productId) => {
             return currentProducts.filter((product) => product.id !== productId)
-            // step 3 te setOptimisticProduct function jei productId value deye call hoica oi ta amra currentProducts array thake filter kore bad dao ya hocca and abong optimisticProducts === currentProducts set kora hocce  
+            // Step 3️⃣: Updater function কাজ করে
+            // - `currentProducts` = আগের UI state (optimisticProducts)
+            // - `productId` = যেটা user delete করতে চাচ্ছে
+            // - updater function filter করে ঐ product বাদ দেয়
+            // - নতুন array return হয় → UI তে instant update হয়
+            // - তারপর `optimisticProducts` = updater function return value সেট হয়  mne optimisticProduct === currentProducts 
         });
 
     const removeProductId = async (productId: number) => {
+        // Step 2️⃣: User action triggers delete
+        // - যখন `removeProductById(productId)` call হয়
+        // - `setOptimisticProducts(productId)` execute হয়
+        // - তখন `updater function` (currentProducts, productId) auto call হয়
         setOptimisticProduct(productId);
-        // step 2 te jhokon removeProductId tigger hoi ca thokon setOptimisticProduct(productId) deye (currentProducts, productId) function ta call hobe 
         await RemoveProduct(productId);
     }
 
