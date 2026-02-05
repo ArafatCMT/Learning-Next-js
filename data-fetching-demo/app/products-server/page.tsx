@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { RemoveProduct } from "../add-product-server/products";
 
 export type Product = {
     id: number,
@@ -8,7 +9,7 @@ export type Product = {
 }
 
 export default async function ProductsServer() {
-    await new Promise((reslove) => setTimeout(reslove, 1500));
+    // await new Promise((reslove) => setTimeout(reslove, 1500));
     const response = await fetch("http://127.0.0.1:8000/api/product-list/");
 
     if (!response.ok) throw new Error("Faild to fetch data in server component!");
@@ -17,7 +18,7 @@ export default async function ProductsServer() {
 
     return (
         <>
-            <div style={{ padding: "20px"}}>
+            <div style={{ padding: "20px" }}>
                 <h1 style={{ marginBottom: "20px", color: "#333", fontFamily: "Arial, sans-serif", fontSize: "32px" }}>
                     Products List on server component
                 </h1>
@@ -74,19 +75,21 @@ export default async function ProductsServer() {
                                         Edit
                                     </Link>
 
-                                    <Link href="#"
-                                        style={{
-                                            padding: "7px 14px",
-                                            borderRadius: "6px",
-                                            border: "1px solid #dc2626",
-                                            backgroundColor: "#ef4444",
-                                            color: "#fff",
-                                            cursor: "pointer",
-                                            fontWeight: "500",
-                                        }}
-                                    >
-                                        Delete
-                                    </Link>
+                                    <form action={RemoveProduct.bind(null, product.id)}>
+                                        <button
+                                            style={{
+                                                padding: "7px 14px",
+                                                borderRadius: "6px",
+                                                border: "1px solid #dc2626",
+                                                backgroundColor: "#ef4444",
+                                                color: "#fff",
+                                                cursor: "pointer",
+                                                fontWeight: "500",
+                                            }}
+                                        >
+                                            Delete
+                                        </button>
+                                    </form>
                                 </div>
 
                             </div>

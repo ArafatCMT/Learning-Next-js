@@ -1,5 +1,6 @@
 "use server"
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 export type Errors = {
     title?: string,
@@ -82,5 +83,17 @@ export async function EditProduct(preState: formState ,formData: FormData) {
         redirect("/products-server")
     }
     throw new Error("Faild to add product!");
+}
+
+export async function RemoveProduct(id:number) {
+    const response = await fetch(`http://127.0.0.1:8000/api/product-details/${id}`,{
+        method:"DELETE",
+        headers:{"Content-Type":"application/json"}
+    })
+
+    if(response.ok){
+        revalidatePath("/products-server")
+        // revalidatePath() দিলে ওই path-এর data আবার নতুন করে fetch হবে।
+    }
 }
 
