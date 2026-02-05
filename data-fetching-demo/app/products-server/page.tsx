@@ -1,4 +1,6 @@
-type Product = {
+import Link from "next/link"
+
+export type Product = {
     id: number,
     title: string,
     price: number,
@@ -15,7 +17,7 @@ export default async function ProductsServer() {
 
     return (
         <>
-            <div style={{ padding: "20px" }}>
+            <div style={{ padding: "20px"}}>
                 <h1 style={{ marginBottom: "20px", color: "#333", fontFamily: "Arial, sans-serif", fontSize: "32px" }}>
                     Products List on server component
                 </h1>
@@ -49,6 +51,44 @@ export default async function ProductsServer() {
                                 <p style={{ margin: "0", color: "#555", fontSize: "14px" }}>
                                     {product.description}
                                 </p>
+                                {/* button  */}
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                        gap: "12px",
+                                        marginTop: "10px",
+                                    }}
+                                >
+                                    <Link href={`/products-server/${product.id}`}
+                                        style={{
+                                            padding: "7px 14px",
+                                            borderRadius: "6px",
+                                            border: "1px solid #2563eb",
+                                            backgroundColor: "#3b82f6",
+                                            color: "#fff",
+                                            cursor: "pointer",
+                                            fontWeight: "500",
+                                        }}
+                                    >
+                                        Edit
+                                    </Link>
+
+                                    <Link href="#"
+                                        style={{
+                                            padding: "7px 14px",
+                                            borderRadius: "6px",
+                                            border: "1px solid #dc2626",
+                                            backgroundColor: "#ef4444",
+                                            color: "#fff",
+                                            cursor: "pointer",
+                                            fontWeight: "500",
+                                        }}
+                                    >
+                                        Delete
+                                    </Link>
+                                </div>
+
                             </div>
                         )
                     })

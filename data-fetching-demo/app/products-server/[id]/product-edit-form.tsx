@@ -1,15 +1,16 @@
 "use client"
-
 import { useActionState } from "react";
-import { HandleSubmit, formState } from "./products";
+import { formState } from "@/app/add-product-server/products";
+import { Product } from "../page";
+import { EditProduct } from "@/app/add-product-server/products";
 
-export default function AddProductServer() {
+export default function EditProductForm({product}:{product: Product}) {
 
     const initialState: formState ={
         errors:{}
     }
 
-    const [state, formAction, isPending] = useActionState(HandleSubmit, initialState)
+    const [state, formAction, isPending] = useActionState(EditProduct, initialState)
     // useActionState () প্রথম parameter হলো server action function যা তুমি form-submit এ চালাতে চাও, এটা একটা function যা form data নিয়ে server-side কাজ করে (validation, save, etc.)
     
     return (
@@ -28,14 +29,17 @@ export default function AddProductServer() {
                 <h2
                     style={{
                         textAlign: "center",
-                        marginBottom: "20px",
+                        marginBottom: "25px",
+                        fontWeight: "bold",
+                        fontSize:"25px"
                     }}
                 >
-                    Add Product Server
+                    Edit Product Form
                 </h2>
 
                 {/* User ID */}
                 <div style={{ marginBottom: "15px" }}>
+                    <input type="hidden" name="id" value={product.id}/>
                     <label style={{ display: "block", marginBottom: "5px" }}>
                         Title
                     </label>
@@ -49,7 +53,7 @@ export default function AddProductServer() {
                             borderRadius: "4px",
                             border: "1px solid #ccc",
                         }}
-                        
+                        defaultValue={product.title}
                     />
                     {
                         state.errors.title && <p style={{color:"red"}}>{state.errors.title}</p>
@@ -71,6 +75,7 @@ export default function AddProductServer() {
                             borderRadius: "4px",
                             border: "1px solid #ccc",
                         }}
+                        defaultValue={product.price}
                     />
                     {
                         state.errors.price && <p style={{color:"red"}}>{state.errors.price}</p>
@@ -93,6 +98,7 @@ export default function AddProductServer() {
                             border: "1px solid #ccc",
                             resize: "none",
                         }}
+                        defaultValue={product.description ?? ""}
                     />
                     {
                         state.errors.description && <p style={{color:"red"}}>{state.errors.description}</p>
@@ -113,7 +119,7 @@ export default function AddProductServer() {
                         fontSize: "16px",
                     }}
                 >
-                    {isPending? "Submitting...": "Submit"}
+                    {isPending? "Updating...": "Update"}
                 </button>
                 {/* <Submit/> */}
             </form>
